@@ -7,8 +7,7 @@ edition = "2021"
 
 [dependencies]
 futures = "0.3.17"
-futures-util = { version = "0.3.21", features = [ "bilock", "unstable" ] }
 serde = { version = "1.0.130", features = [ "derive" ] }
-tokio = { version = "1.17.0", features = ["fs", "net", "rt", "macros", "time", "io-util", "sync", "rt-multi-thread"] }
+tokio = { version = "1.17.0", features = ["net", "rt", "macros", "io-util", "rt-multi-thread"] }
 tokio-serde = { version = "0.8.0", features = [ "bincode" ] }
 tokio-util = { version = "0.7.0", features = ["codec", "compat"] }

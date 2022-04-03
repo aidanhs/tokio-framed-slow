@@ -6,9 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-futures = "=0.3.17"
-futures-util = { version = "=0.3.21", features = [ "bilock", "unstable" ] }
-serde = { version = "=1.0.130", features = [ "derive" ] }
-tokio = { version = "=1.14.0", features = ["fs", "net", "rt", "macros", "time", "io-util", "sync", "rt-multi-thread"] }
-tokio-serde = { version = "=0.8.0", features = [ "bincode" ] }
-tokio-util = { version = "=0.7.0", features = ["codec", "compat"] }
+futures = "0.3.17"
+futures-util = { version = "0.3.21", features = [ "bilock", "unstable" ] }
+serde = { version = "1.0.130", features = [ "derive" ] }
+tokio = { version = "1.17.0", features = ["fs", "net", "rt", "macros", "time", "io-util", "sync", "rt-multi-thread"] }
+tokio-serde = { version = "0.8.0", features = [ "bincode" ] }
+tokio-util = { version = "0.7.0", features = ["codec", "compat"] }

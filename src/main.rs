@@ -28,14 +28,14 @@ struct ThrottledRead<W> {
     inner: W,
 }
 impl<W> ThrottledRead<W> {
-	fn new(inner: W) -> Self {
+    fn new(inner: W) -> Self {
         Self {
             buf: vec![0; 100*1024*1024], // big enough to handle whatever read we have
             pos: 0,
             len: 0,
             inner,
         }
-	}
+    }
 }
 impl<W: futures::io::AsyncRead + Unpin> futures::io::AsyncRead for ThrottledRead<W> {
     fn poll_read(
@@ -45,7 +45,7 @@ impl<W: futures::io::AsyncRead + Unpin> futures::io::AsyncRead for ThrottledRead
     ) -> Poll<io::Result<usize>> {
         let self_ = Pin::into_inner(self);
         // Need to read some more data?
-		if self_.pos == self_.len {
+        if self_.pos == self_.len {
             let n = futures::ready!(Pin::new(&mut self_.inner).poll_read(cx, &mut self_.buf)).unwrap();
             self_.pos = 0;
             self_.len = n;
@@ -59,7 +59,7 @@ impl<W: futures::io::AsyncRead + Unpin> futures::io::AsyncRead for ThrottledRead
         buf[..num_to_copy].copy_from_slice(elts);
         self_.pos += elts.len();
         Poll::Ready(Ok(elts.len()))
-	}
+    }
 }
 
 fn main() {

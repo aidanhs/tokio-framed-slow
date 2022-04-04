@@ -8,6 +8,9 @@ edition = "2021"
 [dependencies]
 futures = "0.3.17"
 serde = { version = "1.0.130", features = [ "derive" ] }
-tokio = { version = "1.17.0", features = ["net", "rt", "macros", "io-util", "rt-multi-thread"] }
+#tokio = { path = "tokio/tokio", features = ["net", "rt", "macros", "io-util", "rt-multi-thread"] }
+tokio = { git = "https://github.com/aidanhs/tokio.git", rev = "bb00802", features = ["net", "rt", "macros", "io-util", "rt-multi-thread"] }
+#tokio-serde = { git = "https://github.com/aidanhs/tokio.git", rev = "", path = "tokio-serde", features = [ "bincode" ] }
 tokio-serde = { version = "0.8.0", features = [ "bincode" ] }
-tokio-util = { version = "0.7.0", features = ["codec", "compat"] }
+#tokio-util = { path = "tokio/tokio-util", features = ["codec", "compat"] }
+tokio-util = { git = "https://github.com/aidanhs/tokio.git", rev = "bb00802", features = ["codec", "compat"] }

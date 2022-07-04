@@ -4,6 +4,7 @@ use futures::{SinkExt, StreamExt};
 use serde::{Deserialize, Serialize};
 use std::cmp;
 use std::io;
+use std::mem;
 use std::pin::Pin;
 use std::task::{Context, Poll};
 use std::time::Instant;
@@ -63,9 +64,11 @@ impl<W: futures::io::AsyncRead + Unpin> futures::io::AsyncRead for ThrottledRead
 }
 
 fn main() {
+    println!("Using a single threaded tokio executor");
     let rt = tokio::runtime::Builder::new_current_thread().build().unwrap();
     //let rt = tokio::runtime::Runtime::new().unwrap();
 
+    println!("Sending data over an in-memory channel with tokio_serde::Framed");
     {
         let (src, dst) = futures_pipe_stream();
         let (src, dst) = framedcpy1(src, dst);
@@ -74,6 +77,7 @@ fn main() {
         println!("t1 {:?}", now.elapsed());
     }
 
+    println!("Sending data over an in-memory channel with tokio_serde::Framed and a BufReader on the recv side");
     {
         let (src, dst) = futures_pipe_stream();
         let (src, dst) = framedcpy2(src, dst);
@@ -92,6 +96,12 @@ fn run(
         a: 0,
         b: vec![55; 1024*2],
     };
+    const NUM_STRUCTS: usize = 1_000_000;
+    let single_struct_size =
+        mem::size_of_val(&ms) +
+        (mem::size_of_val(&ms.b[0]) * ms.b.len());
+
+    println!("sending {}MB", single_struct_size * NUM_STRUCTS / 1024 / 1024);
     let fut = futures::future::join(
         async {
             for i in 0..1_000_000 {
